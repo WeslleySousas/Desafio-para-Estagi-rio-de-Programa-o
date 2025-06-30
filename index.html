@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio Técnico - Números Aleatórios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    #resultados {
+      margin-top: 20px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Gerador e Analisador de Números</h2>
+
+  <label for="quantidade">Digite a quantidade de números:</label>
+  <input type="number" id="quantidade" min="1" placeholder="Ex: 10">
+
+  <button onclick="gerarNumeros()">Gerar e Analisar</button>
+
+  <div id="resultados"></div>
+
+  <script>
+    function gerarNumeros() {
+      const qtd = parseInt(document.getElementById('quantidade').value);
+      const resultadosDiv = document.getElementById('resultados');
+      resultadosDiv.innerHTML = "";
+
+      if (isNaN(qtd) || qtd <= 0) {
+        resultadosDiv.innerHTML = "<p>Por favor, digite um número válido maior que 0.</p>";
+        return;
+      }
+
+      // Gera os números
+      const numeros = [];
+      for (let i = 0; i < qtd; i++) {
+        numeros.push(Math.floor(Math.random() * 100) + 1);
+      }
+
+      // Cálculos
+      const soma = numeros.reduce((acc, val) => acc + val, 0);
+      const media = (soma / qtd).toFixed(2);
+      const maior = Math.max(...numeros);
+      const menor = Math.min(...numeros);
+      const pares = numeros.filter(n => n % 2 === 0).length;
+      const impares = qtd - pares;
+
+      // Mostra resultados
+      resultadosDiv.innerHTML = `
+        <p><strong>Números gerados:</strong> ${numeros.join(', ')}</p>
+        <p><strong>Média:</strong> ${media}</p>
+        <p><strong>Maior número:</strong> ${maior}</p>
+        <p><strong>Menor número:</strong> ${menor}</p>
+        <p><strong>Quantidade de pares:</strong> ${pares}</p>
+        <p><strong>Quantidade de ímpares:</strong> ${impares}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
